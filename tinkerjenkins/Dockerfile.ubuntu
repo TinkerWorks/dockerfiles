@@ -1,0 +1,14 @@
+FROM jenkins/jenkins:jdk11
+
+USER root
+
+RUN echo 'deb http://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_18.04/ /' > /etc/apt/sources.list.d/devel:kubic:libcontainers:stable.list
+RUN wget -nv https://download.opensuse.org/repositories/devel:kubic:libcontainers:stable/xUbuntu_18.04/Release.key -O Release.key
+RUN apt-key add - < Release.key
+RUN apt-get update -qq
+RUN apt-get -qq -y install buildah
+
+RUN apt-get -qq -y install python3-pip
+
+
+USER jenkins
