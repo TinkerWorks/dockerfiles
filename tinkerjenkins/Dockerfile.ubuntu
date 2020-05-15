@@ -7,8 +7,14 @@ RUN wget -nv https://download.opensuse.org/repositories/devel:kubic:libcontainer
 RUN apt-key add - < Release.key
 RUN apt-get update -qq
 RUN apt-get -qq -y install buildah
+RUN apt-get - install libfuse2
+RUN sed 's|^#mount_program|mount_program|g' -i /etc/containers/storage.conf
+ENV _BUILDAH_STARTED_IN_USERNS="" BUILDAH_ISOLATION=chroot
 
+
+# python stuff
 RUN apt-get -qq -y install python3-pip
 
-
 USER jenkins
+
+
