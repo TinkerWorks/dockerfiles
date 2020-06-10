@@ -11,6 +11,7 @@ RUN apt-get - install libfuse2
 RUN sed 's|^#mount_program|mount_program|g' -i /etc/containers/storage.conf
 ENV _BUILDAH_STARTED_IN_USERNS="" BUILDAH_ISOLATION=chroot
 
+RUN apt-get -qq -y install mosquitto mosquitto-clients
 
 # python stuff
 RUN apt-get -qq -y install python3-pip
