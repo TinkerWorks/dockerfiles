@@ -1,0 +1,19 @@
+FROM jenkins/jenkins:centos
+
+USER root
+
+# we want to build stuff
+RUN dnf groupinstall -y "Development Tools"
+
+#buildah stuff
+RUN dnf install -y buildah
+# Adjust storage.conf to enable Fuse storage.
+#RUN sed -i -e 's|^driver = "overlay"|driver = "vfs"|g' /etc/containers/storage.conf
+RUN sed -i -e 's|^#mount_program|mount_program|g' -e '/additionalimage.*/a "/var/lib/shared",' /etc/containers/storage.conf
+ENV _BUILDAH_STARTED_IN_USERNS="" BUILDAH_ISOLATION=chroot
+
+# python stuff
+RUN dnf install -y python3 python3-pip python3-devel
+RUN dnf install -y python38 python38-pip python38-devel
+
+USER jenkins
