@@ -1,7 +1,10 @@
 #!/usr/bin/env groovy
+String daily_cron_string = BRANCH_NAME == "master" ? "@daily" : ""
 
 pipeline {
     agent any
+
+    triggers { cron(daily_cron_string) }
 
     stages {
         stage('... Environment interrogation ...') {
