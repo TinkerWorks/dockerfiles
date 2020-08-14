@@ -2,6 +2,10 @@ FROM jenkins/jenkins:centos
 
 USER root
 
+# Kubernetes automation
+COPY kubernetes.repo /etc/yum.repos.d/kubernetes.repo
+RUN dnf install -y kubectl
+
 # we want to build stuff
 RUN dnf groupinstall -y "Development Tools"
 
