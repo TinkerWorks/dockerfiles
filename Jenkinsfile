@@ -15,20 +15,25 @@ pipeline {
                 sh "buildah info"
             }
         }
-        stage('Build containers') {
-            steps {
-                ansiColor('xterm') {
-                    echo '... Building ...'
-                    sh "buildah bud -t tinkerjenkins -f Dockerfile.centos tinkerjenkins"
+        stage('... Running ...') {
+            parallel {
+                stage ('Jenkins') {
+                    steps {
+                        ansiColor('xterm') {
+                            echo '... Building ...'
+                            sh "buildah bud -t tinkerjenkins -f Dockerfile.centos tinkerjenkins"
+                            sh "buildah push tinkerjenkins docker://registry.tinker.haus/tinkerjenkins:centos"
+                        }
+                    }
                 }
-            }
-        }
-        stage('Deploy') {
-            steps {
-                echo 'Deploying....'
-                ansiColor('xterm') {
-                    echo '... Building ...'
-                    sh "buildah push tinkerjenkins docker://registry.tinker.haus/tinkerjenkins:centos"
+                stage ('nextcloud') {
+                    steps {
+                        ansiColor('xterm') {
+                            echo '... Building ...'
+                            sh "buildah bud -t tinkernextcloud -f Dockerfile tinkernextcloud"
+                            sh "buildah push tinkernextcloud docker://registry.tinker.haus/tinkernextcloud:latest"
+                        }
+                    }
                 }
             }
         }
