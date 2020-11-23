@@ -37,5 +37,11 @@ pipeline {
                 }
             }
         }
+        stage('... Cleanup ...') {
+            steps {
+                sh "buildah rmi -a"
+            }
+        }
+
     }
 }
