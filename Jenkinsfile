@@ -35,6 +35,15 @@ pipeline {
                         }
                     }
                 }
+                stage ('transmission') {
+                    steps {
+                        ansiColor('xterm') {
+                            echo '... Building ...'
+                            sh "buildah bud -t tinkertransmission -f Dockerfile tinkertransmission"
+                            sh "buildah push tinkertransmission docker://registry.tinker.haus/tinkertransmission:latest"
+                        }
+                    }
+                }
             }
         }
         stage('... Cleanup ...') {
