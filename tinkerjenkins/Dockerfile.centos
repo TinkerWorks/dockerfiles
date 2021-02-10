@@ -20,4 +20,8 @@ ENV _BUILDAH_STARTED_IN_USERNS="" BUILDAH_ISOLATION=chroot
 RUN dnf install -y python3 python3-pip python3-devel
 RUN dnf install -y python38 python38-pip python38-devel
 
+# Consuela stuff
+RUN dnf install -y http://ccrypt.sourceforge.net/download/1.11/ccrypt-1.11-1.x86_64.rpm
+RUN dnf install -y libguestfs-tools
+
 USER jenkins
