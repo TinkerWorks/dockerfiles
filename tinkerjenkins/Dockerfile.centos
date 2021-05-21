@@ -24,4 +24,6 @@ RUN dnf install -y python38 python38-pip python38-devel
 RUN dnf install -y http://ccrypt.sourceforge.net/download/1.11/ccrypt-1.11-1.x86_64.rpm
 RUN dnf install -y libguestfs-tools
 
+RUN pip3 install platformio
+
 USER jenkins
