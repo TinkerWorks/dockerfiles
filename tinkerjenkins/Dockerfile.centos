@@ -2,6 +2,14 @@ FROM jenkins/jenkins:centos
 
 USER root
 
+RUN dnf install dnf-plugins-core
+RUN dnf install -y epel-release
+RUN dnf config-manager --set-enabled powertools
+RUN dnf config-manager --set-enabled epel
+RUN dnf install -y gdal-devel python3-gdal gdal-python-tools gdal-doc gdal gdal-libs
+RUN dnf install -y python3-matplotlib
+RUN dnf install -y opencv-core.x86_64 opencv-devel.x86_64 opencv-contrib.x86_64
+
 # Kubernetes automation
 COPY kubernetes.repo /etc/yum.repos.d/kubernetes.repo
 RUN dnf install -y kubectl
